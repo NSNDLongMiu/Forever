@@ -1,0 +1,53 @@
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import SignIn from './Components/Authentication/SignIn';
+import SignUp from './Components/Authentication/SignUp';
+import MyAccount from './MyAccount';
+import Home from './Home';
+import Cart from './Cart';
+import Test from './Test';
+import HomeTest from './src/screens/Home';
+import Wishlist from './Wishlist';
+import { startClock } from 'react-native-reanimated';
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import allReducer from "./src/reducers";
+
+
+let store = createStore(allReducer);
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const AccountStack = createStackNavigator();
+
+function AccountStackScreen() {
+  return (
+    <AccountStack.Navigator initialRouteName="MyAccount" screenOptions={{ headerShown: false }}>
+      <AccountStack.Screen name="MyAccount" component={MyAccount}/>
+      <AccountStack.Screen name="SignIn" component={SignIn} />
+      <AccountStack.Screen name="SignUp" component={SignUp} />
+    </AccountStack.Navigator>
+  );
+}
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator initialRouteName="Home">
+        <Tab.Screen name="Home" component={Home}/>
+        <Tab.Screen name="Wishlist" component={Wishlist}/>
+        <Tab.Screen name="Cart" component={Cart}/>
+        <Tab.Screen name="Test" component={Test}/>
+        <Tab.Screen name="HomeTest" component={HomeTest}/>
+        <Tab.Screen name="MyAccount" component={AccountStackScreen}/>
+      </Tab.Navigator>
+    </NavigationContainer>  
+
+  );
+}
+
+export default App;
